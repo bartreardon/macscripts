@@ -11,10 +11,10 @@ bootVol=$(df | grep $(bless -info --getboot) | awk '{printf $9; i = 10; while ($
 mkdir "$bootVol/etc/injector"
 
 # copy assets to boot volume
+# can be script to add admin user, set conditions for software install etc.v
 
 cp /Install/addmacadmin.sh "$bootVol/etc/injector/"
 chmod a+x "$bootVol/etc/injector/addmacadmin.sh"
-
 cp /Install/addmacadmin.plist "$bootVol/Library/LaunchDaemons/addmacadmin.plist"
 
 cp -R /Install "$bootVol/etc/injector/"
