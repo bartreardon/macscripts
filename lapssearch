@@ -1,0 +1,50 @@
+#!/usr/bin/python
+
+import getopt, os, re, socket, subprocess, sys 
+
+currentHostName = socket.gethostname()
+script_name = os.path.basename(sys.argv[0])
+ldapServer = "foo.com.au"
+searchBase = "dc=foo,dc=com,dc=au"
+
+def main(argv):
+    username = ''
+    computername = ''
+    try:
+        opts, args = getopt.getopt(argv,"hu:c:",["username=","computername="])
+    except getopt.GetoptError:
+        print 'USAGE: %s -u <username> [-c <computername>]' % script_name
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            print 'USAGE: %s -u <username> [-c <computername>]' % script_name
+            sys.exit()
+        elif opt in ("-u", "--username"):
+            username = arg
+        elif opt in ("-c", "--computername"):
+            computername = arg
+
+    if computername == "":
+            computername = currentHostName
+    
+    if username == "":
+        print 'USAGE: %s -u <username> [-c <computername>]' % script_name
+        sys.exit()
+        
+    LDAPSearchCommand = "ldapsearch -LLL -x -h %s -D \"%s\" -W -b \"%s\" \"(&(objectcategory=computer)(name=%s))\" ms-MCS-AdmPwd" % (ldapServer,username,searchBase,computername)
+
+    p = subprocess.Popen(LDAPSearchCommand, stdout=subprocess.PIPE, shell=True)
+    output = p.stdout.read()
+
+    compFound = False
+
+    for line in output.splitlines():
+        if re.search("ms-Mcs-AdmPwd", line):
+            print line.replace("ms-Mcs-AdmPwd: ","")
+            compFound = True
+
+    if compFound is not True:
+        print "computername \"%s\" not found, admin password not set or invalid credentials" % computername
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
