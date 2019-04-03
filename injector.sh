@@ -26,3 +26,4 @@ touch "$bootVol/var/db/.AppleSetupDone"
 shutdown -r now
 
 # end injector
+# here is a comment
