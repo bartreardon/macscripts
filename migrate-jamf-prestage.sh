@@ -154,13 +154,13 @@ echo "Done processing source prestage."
 # format serial number list for json
 formattedSerialNumberList=$( json_array "${serialList[@]}" )
 
-# create json data for submission to CASS prestage
+# create json data from source prestage
 sourceJSONData="{
   \"serialNumbers\": $formattedSerialNumberList,
   \"versionLock\": $sourceVersionLock
 }"
 
-# create json data for reading from main CSIRO prestage
+# create json data for destination prestage
 destinationJSONData="{
   \"serialNumbers\": $formattedSerialNumberList,
   \"versionLock\": $destinationVersionLock
