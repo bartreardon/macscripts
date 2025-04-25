@@ -21,10 +21,10 @@
 
 
 PROCESS_NAME="$1"
-NICE_VALUE="${2:-+10}" # Default to +20 if not provided
+NICE_VALUE="${2:-+10}" # Default to +10 if not provided
 # If using in a jamf script:
 # PROCESS_NAME="$4"
-# NICE_VALUE="${5:-+10}" # Default to +20 if not provided
+# NICE_VALUE="${5:-+10}" # Default to +10 if not provided
 
 # Constants
 RETRY_INTERVAL=60 # seconds
