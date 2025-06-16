@@ -112,8 +112,10 @@ echo "JWT valid until $(date -r $exp)"
 ###### Requesting a bearer token #######
 ## Put this in a seperate script and pass in the path to your client_assertion.txt 
 
-## Client Assertion generated with the create_client_assertion.sh script
+## Client Assertion generated with the create_client_assertion.sh script (the actual content of the file, not the file itself)
 # client_assert="$1"
+## or if you want to use the file
+# client_assert=$(cat $1)
 
 ## Client ID from ABM/ASM
 # client_id="$2"
